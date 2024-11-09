@@ -9,8 +9,16 @@ for(let i=0;i<a.length;i++){
         count[num]=1;
     }
 }
-for(let i=0;i<count.length;i++){
-    if(count[i]>1){
+let x=0;
+for(let i=0;i<a.length;i++){
+
+    if(count[a[i]]==1){
         console.log(i);
+        x++;
+        break;
     }
+    
+}
+if(x==0){
+    console.log("Trong mảng không có phần tử độc nhất");
 }
