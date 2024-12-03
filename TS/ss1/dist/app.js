@@ -1,0 +1,16 @@
+"use strict";
+console.log('Hello World');
+let fullname;
+fullname = 'John Doe';
+let age;
+age = 20;
+let gender;
+gender = true;
+let empty;
+empty = null;
+let family;
+family = undefined;
+let randomValue;
+randomValue = 'John Doe';
+randomValue = 20;
+randomValue = true;
