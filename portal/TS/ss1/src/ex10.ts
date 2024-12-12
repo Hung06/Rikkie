@@ -47,8 +47,8 @@ function getZodiacSign(day, month) {
 }
 
 // Nhập ngày và tháng sinh
-let day = parseInt(prompt("Nhập ngày sinh:"));
-let month = parseInt(prompt("Nhập tháng sinh:"));
+let day = parseInt(prompt("Nhập ngày sinh:") || "0");
+let month = parseInt(prompt("Nhập tháng sinh:") || "0");
 
 // Kiểm tra cung hoàng đạo và hiển thị thông báo
 let zodiac = getZodiacSign(day, month);
