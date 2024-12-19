@@ -1,5 +1,6 @@
 // DO NOT EDIT users
-type Users = {
+type Users = User[]; // An array of User objects
+type User = {
     id: number;
     first_name: string;
     last_name: string;
@@ -7,7 +8,8 @@ type Users = {
     gender: string;
     age: number;
     salary: number;
-} [];
+};
+
 
 const users: Users = [
     {
@@ -9016,12 +9018,17 @@ const users: Users = [
   function problem01(users: Users): string[] {
     // Use forEach to get first_name and last_name of all users
     // and put it an array then return that array
-    const fullnames: string[] = [];
-    users.forEach((user) => {
-      const fullname = `${user.first_name} ${user.last_name}`;
-      fullnames.push(fullname);
+    // const fullnames: string[] = [];
+    // users.forEach((user) => {
+    //   const fullname = `${user.first_name} ${user.last_name}`;
+    //   fullnames.push(fullname);
+    // });
+    let result: string[] = [];
+    users.forEach(function (element: User,index:number): void {
+        let fullName: string = `${element.first_name} ${element.last_name}`;
+        result.push(fullName);
     });
-    return fullnames; // []
+    return result;
   }
   // console.log(problem01(users));
   function problem02(users: Users): Users {
@@ -9037,17 +9044,57 @@ const users: Users = [
     return fullname;
   }
   // console.log(problem03(users));
-  function problem04(users: Users) {
+  type UserCamelCase = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    gender: string;
+    age: number;
+    salary: number;
+};
+    
+
+  function problem04(users: Users) :UserCamelCase[] {
     // Return a new array of users with keys in camelCase
-    const camelCaseUsers = users.map(user => {
-      const newUser: Record<string, any> = {};
-      for (const key in user) {
-          const newKey = key.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
-          newUser[newKey] = user[key as keyof typeof user];
-      }
-      return newUser; 
+    // const camelCaseUsers = users.map(user => {
+    //   const newUser: Record<string, any> = {};
+    //   for (const key in user) {
+    //       const newKey = key.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
+    //       newUser[newKey] = user[key as keyof typeof user];
+    //   }
+    //   return newUser; 
+    // });
+    let result: UserCamelCase[] = [];
+    for (let user of users) {
+      // user(first_name, last_name)
+  
+      // Object destructuring (Tái cấu trúc lại đối tượng)
+      // Clone được toàn bộ thuộc tính của 1 đối tượng nhưng
+      // loại trừ đi 1 số thuộc tính không mong muốn
+  
+      let { first_name, last_name, ...rest } = user;
+      let userCamelCase: UserCamelCase = {
+        ...rest,
+        firstName: user.first_name,
+        lastName: user.last_name,
+      };
+      result.push(userCamelCase);
+    }
+  
+    // C2:
+    // Array method - map
+    users.map(function (element: User,index:number): void {
+      let { first_name, last_name, ...rest } = element;
+      let userCamelCase: UserCamelCase = {
+        ...rest,
+        firstName: element.first_name,
+        lastName: element.last_name,
+      };
+      result.push(userCamelCase);
     });
-    return camelCaseUsers;
+  
+    return result;
   }
   
   // console.log(problem04(users));
@@ -9058,7 +9105,7 @@ const users: Users = [
     const avgage=totalage/userlength;
     return avgage;
   }
-  console.log(problem05(users));
+  // console.log(problem05(users));
   function problem0601(users: Users): string[] {
     // return an array of full name using Array.prototype.reduce
     const fullname=users.reduce<string[]>((acc,users) =>{
@@ -9101,20 +9148,40 @@ const users: Users = [
   console.log(problem07(users));
   function faMap(array: number[], fn: Function) {
     // implement faMap that works like Array.prototype.map
+    const result: number[] = [];
+    for (let i = 0; i < array.length; i++) {
+        result.push(fn(array[i], i, array));
+    }
+    return result;
   }
   // console.log(problem01(users));
   // console.log(faMap([1, 2, 3], (item, index) => item += 2));
   
   function faFilter(array: number[], predicate: Function) {
     // implement faMap that works like Array.prototype.filter
+    const result: number[] = [];
+    for (let i = 0; i < array.length; i++) {
+        if (predicate(array[i], i, array)) {
+            result.push(array[i]);
+        }
+    }
+    return result;
   }
   // console.log(problem01(users));
-  function faReduce(array: number[], fn: Function, defaultValue: number) {}
+  function faReduce(array: number[], fn: Function, defaultValue: number) {
+    let accumulator = defaultValue; // Giá trị tích lũy ban đầu
+    for (let i = 0; i < array.length; i++) {
+        accumulator = fn(accumulator, array[i], i, array); // Cập nhật giá trị tích lũy
+    }
+    return accumulator;
+  }
   
   // console.log(faReduce([1, 2, 3], (p, c, i) => p += c));
   // console.log(problem01(users));
   function problem1101(array: number[], fn: Function) {
+
     // map array using faReduce
+    
   }
   // console.log(problem01(users));
   function problem1102(array: number[], fn: Function) {

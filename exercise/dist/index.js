@@ -1,4 +1,15 @@
 "use strict";
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 const users = [
     {
         id: 1,
@@ -9005,12 +9016,17 @@ const users = [
 function problem01(users) {
     // Use forEach to get first_name and last_name of all users
     // and put it an array then return that array
-    const fullnames = [];
-    users.forEach((user) => {
-        const fullname = `${user.first_name} ${user.last_name}`;
-        fullnames.push(fullname);
+    // const fullnames: string[] = [];
+    // users.forEach((user) => {
+    //   const fullname = `${user.first_name} ${user.last_name}`;
+    //   fullnames.push(fullname);
+    // });
+    let result = [];
+    users.forEach(function (element, index) {
+        let fullName = `${element.first_name} ${element.last_name}`;
+        result.push(fullName);
     });
-    return fullnames; // []
+    return result;
 }
 // console.log(problem01(users));
 function problem02(users) {
@@ -9024,18 +9040,29 @@ function problem03(users) {
     const fullname = users.map(user => `${user.first_name} ${user.last_name}`);
     return fullname;
 }
-// console.log(problem03(users));
 function problem04(users) {
     // Return a new array of users with keys in camelCase
-    const camelCaseUsers = users.map(user => {
-        const newUser = {};
-        for (const key in user) {
-            const newKey = key.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
-            newUser[newKey] = user[key];
-        }
-        return newUser;
-    });
-    return camelCaseUsers;
+    // const camelCaseUsers = users.map(user => {
+    //   const newUser: Record<string, any> = {};
+    //   for (const key in user) {
+    //       const newKey = key.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
+    //       newUser[newKey] = user[key as keyof typeof user];
+    //   }
+    //   return newUser; 
+    // });
+    let result = [];
+    for (let user of users) {
+        // user(first_name, last_name)
+        // Object destructuring (Tái cấu trúc lại đối tượng)
+        // Clone được toàn bộ thuộc tính của 1 đối tượng nhưng
+        // loại trừ đi 1 số thuộc tính không mong muốn
+        let { first_name, last_name } = user, rest = __rest(user, ["first_name", "last_name"]);
+        let userCamelCase = Object.assign(Object.assign({}, rest), { firstName: user.first_name, lastName: user.last_name });
+        result.push(userCamelCase);
+    }
+    // C2:
+    // Array method - map
+    return result;
 }
 // console.log(problem04(users));
 function problem05(users) {
