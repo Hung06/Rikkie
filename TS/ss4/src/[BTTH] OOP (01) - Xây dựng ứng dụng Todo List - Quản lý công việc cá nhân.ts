@@ -26,6 +26,9 @@ class Todo{
 // listTodos(): In ra toàn bộ danh sách công việc, hiển thị trạng thái hoàn thành hoặc chưa hoàn thành.
 class TodoListManager{
     todo: Todo[] = [];
+    constructor(){
+        this.todo=[{id:"1",content:"Học bài",status:false},{id:"2",content:"Làm bài tập",status:false},{id:"3",content:"Nghỉ ngơi",status:false}];
+    }
     addTodo(content:string){
         if(!content){
             console.log("Nội dung không được để trống");
@@ -34,9 +37,10 @@ class TodoListManager{
         const newTodo = new Todo((this.todo.length + 1).toString(), content);
         this.todo.push(newTodo);
         console.log(`Đã thêm công việc mới: ${newTodo.toString()}`);
+        this.listTodos();
     }
     removeTodo(index:number){
-        if(index<0 || index>=this.todo.length){
+        if(index<0 || index>=this.todo.length || isNaN(index) || index === null){
             console.log("Vị trí không hợp lệ");
             return;
         }
@@ -69,15 +73,20 @@ class TodoListManager{
         console.log(`Tìm thấy công việc: ${this.todo[index].toString()} tại vị trí ${index}`);
     }
     listTodos(){
-        console.log("Danh sách công việc:");
-        this.todo.forEach((todo) => console.log(todo.toString()));
+        if(this.todo.length===0){
+            console.log("Danh sách công việc rỗng");
+        }
+        else{
+            console.log("Danh sách công việc:");
+            this.todo.forEach((todo) => console.log(todo.toString()));
+        }
     }
 }
 // Lớp Main:
 // Khởi tạo một đối tượng TodoListManager.
 // Chạy chương trình theo menu lựa chọn lặp lại trong vòng lặp while.
 class Main{
-    static main(){
+    run(){
         let option ;
         const todoListManager = new TodoListManager();
         while(option!=='7'){
@@ -150,8 +159,12 @@ class Main{
                 case '7':
                     console.log("Thoát chương trình");
                     break;
+                default:
+                    console.log("Chức năng không hợp lệ");
+                    break;
             }
         }
     }
 }
-Main.main();
+const main = new Main();
+main.run();
