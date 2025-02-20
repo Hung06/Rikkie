@@ -1,0 +1,16 @@
+{
+  "name": "express_node_session01-main",
+  "version": "1.0.0",
+  "main": "server2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon sever2.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express_node_session01-main": "file:",
+    "nodemon": "^3.1.9"
+  }
+}
